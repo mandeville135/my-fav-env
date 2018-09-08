@@ -19,9 +19,29 @@
 #   1. ENVIRONMENT CONFIGURATION
 #   -------------------------------
 
+RED='\[\e[1;31m\]'
+BOLDYELLOW='\[\e[1;33m\]'
+GREEN='\[\e[0;32m\]'
+BLUE='\[\e[1;34m\]'
+DARKBROWN='\[\e[1;33m\]'
+DARKGRAY='\[\e[1;30m\]'
+CUSTOMCOLORMIX='\[\e[1;30m\]'
+DARKCUSTOMCOLORMIX='\[\e[1;32m\]'
+LIGHTBLUE="\[\033[1;36m\]"
+PURPLE='\[\e[1;35m\]' #git branch
+# EG: GREEN="\[\e[0;32m\]" 
+#PURPLE='\[\e[1;35m\]'
+#BLUE='\[\e[1;34m\]'
+NC='\[\e[0m\]' # No Color
+
 #   Change Prompt
 #   ------------------------------------------------------------
-    PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u\[\033[0;36m\] @ \w\[\033[0;32m\] - [$(git branch 2>/dev/null | grep "^*" | colrm 1 2)\[\033[0;32m\]]\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
+    export PS1="${LIGHTBLUE}\\u ${BOLDYELLOW}[\\W] ${PURPLE}\$(parse_git_branch)${DARKCUSTOMCOLORMIX}$ ${NC}"
+
+parse_git_branch() {
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+export -f parse_git_branch
 
 #   Set Paths
 #   ------------------------------------------------------------
